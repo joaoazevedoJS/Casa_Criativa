@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #e5e5e5;
+  font-family: 'Roboto', sans-serif;
+  color: #25282b;
+}
+
+
+button {
+  border: none;
+  background: none;
+  font-weight: bold;
+  color: #FF5E84;
+  cursor: pointer;
+}
+
+.fat {
+  color: #FFF;
+  background: #FF5E84;
+}
+
+footer a {
+  text-decoration: none;
+  color: #FF5E84;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.7s;
+}
+
+footer a:hover {
+  border-bottom: 1px solid #FF5E84;
+}
+
+.hide {
+  display: none;
+}
