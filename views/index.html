@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/media.css">
+  <title>Casa Criativa</title>
+{% endblock %}
+
+{% block content %}
+  <section class="intro">
+    <header>
+      <img src="images/logo.png" alt="Casa Criativa">
+    </header>
+
+    <main>
+      <p>
+        Ficar em casa em períodos longos, não deve ser nada fácil.
+      </p>
+
+      <p>
+        Por isso, iremos catalogar ideias, <strong>brincadeiras, jogos, filmes,
+          livros, cursos, dicas</strong> e tudo que for necessário para tornar esse
+        momento mais interessante.
+      </p>
+
+      <p>
+        Comece clicando em ver ideias para ver as ideias cadastradas e contribua
+        adicioando a sua ideia.
+      </p>
+    </main>
+
+    <section class="buttons">
+      <button class="btn-modal btn">+ Adicionar Ideia</button>
+      <a class="btn-full btn" href="/ideias">Ver Ideias</a>
+    </section>
+
+    <footer>
+      By <a href="https://github.com/joaoazevedoJS" target="_blank">João Azevedo</a>
+    </footer>
+  </section>
+
+  <section class="ideias">
+    {% include "all_ideas.html" %}
+  </section>
+{% endblock%}

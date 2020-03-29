@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./pages/ideias/style.css">
+  <link rel="stylesheet" href="./pages/ideias/media.css">
+  <title>Ideias</title>
+{% endblock %}
+
+{% block content %}
+  <header>
+    <a href="/">
+      <img src="../images/logo.png" alt="Casa Criativa">
+    </a>
+    <nav>
+      <li><a href="/">Início</a></li>
+      <li class="btn-modal"><a href="#" class="btn-full btn">Nova Ideia</a></li>
+    </nav>
+  </header>
+
+  <section id="title">
+    <p>em exibição</p>
+    <h1>Ideias</h1>
+  </section>
+
+  <main>
+    <section class="ideias">
+      {% include "all_ideas.html" %}
+    </section>
+  </main>
+
+  <footer>
+    By <a href="https://github.com/joaoazevedoJS" target="_blank">João Azevedo</a>
+  </footer>
+{% endblock %}

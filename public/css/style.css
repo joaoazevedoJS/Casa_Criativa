@@ -169,7 +169,7 @@ footer {
 .modal {
   background: #FF5E84;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 100%;

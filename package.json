@@ -1,0 +1,27 @@
+{
+  "name": "casa-criativa",
+  "version": "1.0.0",
+  "description": "Sistema para armazenar suas ideias",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaoazevedoJS/Casa_Criativa.git"
+  },
+  "keywords": [],
+  "author": "joaoazevedoJS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joaoazevedoJS/Casa_Criativa/issues"
+  },
+  "homepage": "https://github.com/joaoazevedoJS/Casa_Criativa#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nunjucks": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

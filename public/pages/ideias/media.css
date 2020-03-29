@@ -12,6 +12,8 @@
 
   nav {
     margin-top: 64px;
+    width: 90%;
+    justify-content: space-evenly;
   }
 
   .idea .description {
