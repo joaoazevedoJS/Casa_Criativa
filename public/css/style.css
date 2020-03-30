@@ -140,6 +140,23 @@ footer {
   padding: 32px;
   margin-bottom: 32px;
   overflow: hidden;
+
+  position: relative;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  font-size: 25px;
+  color: #FF5E84;
+  background: transparent;
+  transition: background 0.5s;
+}
+
+.delete:hover {
+  filter: brightness(90%)
 }
 
 .idea img {
@@ -275,6 +292,6 @@ form .close:hover {
 
 /* JS */
 
-div.hide {
+.hide {
   display: none;
 }

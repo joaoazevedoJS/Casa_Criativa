@@ -1,70 +1,84 @@
 const express = require('express')
 const nunjucks = require('nunjucks')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override');
 
 const app = express()
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
+// Para usar o metodo delete
+app.use(methodOverride('_method'));
 
-const ideas = [
-  {
-    img: "https://image.flaticon.com/icons/svg/2729/2729007.svg",
-    title: "Curso de Programação",
-    category: "Estudo",
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda minus quo delectus quos quod ipsa
-    temporibus expedita repudiandae accusamus voluptatibus adipisci quasi tempore accusantium dolorem sint,
-    dicta iste earum consequatur!`,
-    url: "https://www.udemy.com/"
-  },
-  {
-    img: "https://image.flaticon.com/icons/svg/2729/2729005.svg",
-    title: "Exercícios",
-    category: "Saúde",
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda minus quo delectus quos quod ipsa
-    temporibus expedita repudiandae accusamus voluptatibus adipisci quasi tempore accusantium dolorem sint,
-    dicta iste earum consequatur!`,
-    url: "https://www.udemy.com/"
-  },
-  {
-    img: "https://image.flaticon.com/icons/svg/2729/2729027.svg",
-    title: "Meditação",
-    category: "Mentalidade",
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda minus quo delectus quos quod ipsa
-    temporibus expedita repudiandae accusamus voluptatibus adipisci quasi tempore accusantium dolorem sint,
-    dicta iste earum consequatur!`,
-    url: "https://www.udemy.com/"
-  },
-  {
-    img: "https://image.flaticon.com/icons/svg/2729/2729007.svg",
-    title: "Curso de Programação",
-    category: "Estudo",
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda minus quo delectus quos quod ipsa
-    temporibus expedita repudiandae accusamus voluptatibus adipisci quasi tempore accusantium dolorem sint,
-    dicta iste earum consequatur!`,
-    url: "https://www.udemy.com/"
-  }
-]
+const db = require("../db")
 
 nunjucks.configure('views', {
   express: app,
   noCache: true,
 })
 
-app.get("/", async (req, res) => {
-  const reversedIdeas = [...ideas].reverse()
-  const lastIdeas = []
-
-   for(let idea of reversedIdeas) {
-    if(lastIdeas.length < 3) {
-      lastIdeas.push(idea)
+app.get("/", (req, res) => {
+  db.all(`SELECT * FROM ideas`, (err, rows) => {
+    if (err) {
+      return res.send(`Erro no banco de dados: ${err.message}`)
     }
-  }
 
-  return res.render("index.html", { ideas: lastIdeas })
+    const reversedIdeas = [...rows].reverse()
+    const lastIdeas = []
+
+    for (let idea of reversedIdeas) {
+      if (lastIdeas.length < 3) {
+        lastIdeas.push(idea)
+      }
+    }
+    return res.render("index.html", { ideas: lastIdeas })
+  })
+})
+
+app.post('/', async (req, res) => {
+  const { image, title, category, description, link } = req.body
+
+  // Inserir dados na tabela
+  const query = `INSERT INTO ideas(
+    image,
+    title,
+    category,
+    description,
+    link
+  ) VALUES (?, ?, ?, ?, ?);` // para cada ? ele vai substituir pelo o valor do array
+
+  const values = [ image, title, category, description, link ]
+
+  await db.run(query, values, (err) => {
+    if (err) {
+      return res.send(`Erro no banco de dados: ${err.message}`)
+    }
+  })
+
+  res.redirect('/ideias')
+})
+
+app.delete('/delete/:id', async(req, res) => {
+  const { id } = req.params
+
+  await db.run(`DELETE FROM ideas WHERE id = ?`, [id], (err) => {
+    if (err) {
+      return res.send(`Erro no banco de dados: ${err.message}`)
+    }
+  })
+
+  res.redirect('/ideias')
 })
 
 app.get("/ideias", (req, res) => {
-  const reversedIdeas = [...ideas].reverse()
-  return res.render("ideias.html", { ideas: reversedIdeas })
+  db.all(`SELECT * FROM ideas`, (err, rows) => {
+    if (err) {
+      return res.send(`Erro no banco de dados: ${err.message}`)
+    }
+
+    const reversedIdeas = [...rows].reverse()
+    return res.render("ideias.html", { ideas: reversedIdeas })
+  })
 })
 
 app.listen(3000)
